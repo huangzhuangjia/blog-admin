@@ -6,9 +6,9 @@ const home: AsyncComponent = () => import(/* webpackChunkName: "home" */ '@/page
 // 视频分类
 const videoSort: AsyncComponent = () => import(/* webpackChunkName: "videoSort" */ '@/pages/videoSort/index.vue') 
 // 学院公告
-const schoolAnnouncement: AsyncComponent = () => import(/* webpackChunkName: "videoSort" */ '@/pages/schoolAnnouncement/index.vue') 
+const schoolAnnouncement: AsyncComponent = () => import(/* webpackChunkName: "schoolAnnouncement" */ '@/pages/schoolAnnouncement/index.vue') 
 // 解封申诉
-const unsealAppeal: AsyncComponent = () => import(/* webpackChunkName: "videoSort" */ '@/pages/unsealAppeal/index.vue') 
+const unsealAppeal: AsyncComponent = () => import(/* webpackChunkName: "unsealAppeal" */ '@/pages/unsealAppeal/index.vue') 
 
 Vue.use(Router)
 
