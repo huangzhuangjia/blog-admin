@@ -65,7 +65,7 @@
 
 .ys-footer {
   width: 100%;
-  min-width: 1200px;
+  min-width: $wrapper-width;
   padding-top: 40px;
   background: $footer-bc-color;
   height: $footer-height;
@@ -80,7 +80,7 @@
     a {
       white-space: nowrap;
       &:hover{
-        color: $footer-hover-color;
+        color: $a-hover-color;
       }
     }
   }

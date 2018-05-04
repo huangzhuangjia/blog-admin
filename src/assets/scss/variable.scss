@@ -1,19 +1,22 @@
+// container
 $module-hover-bg: rgba(0, 0, 0, 0.12);
+$wrapper-width: 1200px;
 // color
 $white: #fff;
-$black: #24292e;
+$black: #333333;
 $blue: #20A0FF;
 $green: #5ab95c;
 $gyey: #efefef;
 $border-color: #d1d5da;
 $black-light: #555;
 $footer-bc-color: #363636;
-$footer-font-color: #696969;
-$footer-hover-color: #fac200;
+$footer-font-color: #6f6f6f;
+$a-hover-color: #fac200;
+$nav-active-color: #fbe037;
 
 
 //text
-$text: $black-light;
+$text: $black;
 $secondary: rgba(0, 0, 0, .54);
 $disabled: rgba(0, 0, 0, .38);
 $dividers: rgba(0, 0, 0, .26);
@@ -21,6 +24,7 @@ $light-dark: $module-hover-bg;
 
 // font-sise
 $font-size-base: 14px;
+$font-size-header: 16px;
 $font-size-footer: 12px;
 
 $header-height: 80px;
