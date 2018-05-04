@@ -1,0 +1,8 @@
+{
+  "host": "localhost",
+  "port": 3000,
+  "quiet": true,
+  "watch": true,
+  "delay": 500,
+  "routes": "./src/api/mock/routes.json"
+}
