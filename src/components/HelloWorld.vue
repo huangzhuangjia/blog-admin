@@ -14,9 +14,9 @@
   import Vue from 'vue'
   import API from '@/api/server'
   import Component from 'vue-class-component'
-  import Message from './common/message'
-  import Dialog from './common/dialog'
-  import Confirm from './common/confirm'
+  // import Message from './common/message'
+  import Dialog from './common/dialog/index.vue'
+  import Confirm from './common/confirm/index.vue'
   import Loading from './common/loading/loading.vue'
 
   @Component({
@@ -37,30 +37,30 @@
     private showLoading: boolean = true
 
     // lifecycle hook
-    private created() {
+    private created () {
       const self = this
-      setTimeout(function () {
+      setTimeout(() => {
         self.greet()
-        Message({message: '我是message'})
+        this.$message({message: '我是message'})
         self.showLoading = false
         self.showDialog = true
       }, 2000)
     }
 
     // computed
-    get computedMsg() {
+    get computedMsg () {
       return 'computed ' + this.msg
     }
 
     // method
-    private greet() {
+    private greet () {
       API.login().then((res: any) => {
         console.log(res)
       })
       // alert('greeting: ' + this.msg)
     }
 
-    private closeDialog() {
+    private closeDialog () {
       this.showConfirm = true
     }
   }

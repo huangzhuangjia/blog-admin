@@ -20,8 +20,8 @@
 <script lang="ts">
   import {Vue, Component, Watch, Prop} from 'vue-property-decorator'
 
-  import Dialog from '../dialog'
-  import Button from '../button'
+  import Dialog from '../dialog/index.vue'
+  import Button from '../button/index.vue'
 
   @Component({
     props: {
@@ -57,21 +57,21 @@
   })
   export default class Confirm extends Vue {
     @Prop()
-    visible: boolean
+    private visible: boolean
 
     private value: boolean = false
-    created() {
+    private created () {
       if (this.visible) {
         this.value = this.visible
       }
     }
 
     @Watch('visible')
-    onValueChanged(val: boolean) {
+    private onValueChanged (val: boolean) {
       this.value = val
     }
     @Watch('value')
-    onCurrentValueChanged(val: boolean) {
+    private onCurrentValueChanged (val: boolean) {
       this.$emit(val ? 'open' : 'close')
     }
     private cancel () {

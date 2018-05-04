@@ -6,6 +6,9 @@ import router from './router'
 import store from './store'
 
 import './assets/scss/index.scss'
+import Message from '@/components/common/message'
+
+Vue.prototype.$message = Message
 
 Vue.config.productionTip = false
 
