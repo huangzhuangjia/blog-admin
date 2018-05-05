@@ -8,6 +8,9 @@ import store from './store'
 import './assets/scss/index.scss'
 import Message from '@/components/common/message'
 
+import Meta from 'vue-meta'
+Vue.use(Meta)
+
 Vue.prototype.$message = Message
 
 Vue.config.productionTip = false

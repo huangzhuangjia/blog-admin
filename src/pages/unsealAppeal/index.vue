@@ -5,12 +5,16 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue, Watch } from 'vue-property-decorator'
-
-
-  @Component
+  import { Component, Vue, Watch, Prop } from 'vue-property-decorator'
+ 
+  @Component({
+    metaInfo: {
+      title: 'Y学院-解封申诉'
+    }
+  })
   export default class UnsealAppeal extends Vue {
-    
+    private mounted () {
+    }
   }
 </script>
 

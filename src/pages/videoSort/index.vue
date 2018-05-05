@@ -8,7 +8,11 @@
   import { Component, Vue, Watch } from 'vue-property-decorator'
 
 
-  @Component
+  @Component({
+    metaInfo: {
+      title: 'Y学院-视频分类'
+    }
+  })
   export default class VideoSort extends Vue {
     
   }
