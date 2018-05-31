@@ -25,7 +25,7 @@
 
     // 设置成员对象的访问权限（public,private,protect)
     "member-access": true,
-    
+
     // 设置修饰符顺序
     "member-ordering": [
       true,
@@ -202,7 +202,7 @@
 
     // 可以导入子包
     "no-submodule-imports": false,
-    
+
     // 可以require导入包
     "no-var-requires": false,
 
@@ -215,7 +215,7 @@
     "object-literal-key-quotes": false,
 
     "object-literal-sort-keys": false,
-    
+
     "max-line-length": [true, 300],
     // 允许带一个参数的箭头函数省去括号
     "arrow-parens": [
@@ -228,8 +228,7 @@
       true,
       "parameters",
       "statements",
-      "members",
-      "elements"
+      "members"
     ]
   },
   "rulesDirectory": []

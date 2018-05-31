@@ -16,4 +16,30 @@ declare namespace StoreState {
     /** 头像 */
     gravatar: string
   }
+  // 路由meta
+  interface Meta {
+    icon: string,
+    title: string,
+    notCache?: string
+  }
+  // 头部面包屑列表
+  export interface BreadCrumbList {
+    name: string,
+    icon?: string,
+    to?: string,
+    meta?: Meta
+  }
+  // 标签导航列表
+  export interface TagNavList {
+    name: string,
+    path: string,
+    meta: Meta
+  }
+  // 菜单列表
+  export interface MenuList {
+    name: string,
+    icon: string,
+    meta: Meta,
+    children: StoreState.MenuList[]
+  }
 }

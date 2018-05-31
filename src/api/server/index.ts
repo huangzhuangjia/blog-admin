@@ -13,7 +13,7 @@ service = {
   })
 }
 
-if (env.mock_env) {
+if (env.mockEnv) {
   service = {
     login : (_data: any) => {
       return fetch({ url: MOCK_API.User.Login, data: _data })

@@ -4,14 +4,14 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import iView from 'iview'
+import 'iview/dist/styles/iview.css'
 
 import './assets/scss/index.scss'
-import Message from '@/components/common/message'
 
 import Meta from 'vue-meta'
 Vue.use(Meta)
-
-Vue.prototype.$message = Message
+Vue.use(iView)
 
 Vue.config.productionTip = false
 

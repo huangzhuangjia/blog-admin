@@ -1,6 +1,6 @@
 /*
- * @Author: huangzhuangjia 
- * @Date: 2018-05-02 15:06:44 
+ * @Author: huangzhuangjia
+ * @Date: 2018-05-02 15:06:44
  * @Last Modified by: huangzhuangjia
  * @Last Modified time: 2018-05-03 11:15:44
  */
@@ -28,7 +28,7 @@ ax.interceptors.request.use(
       config.method === 'patch'
     ) {
       config.data = querystring.stringify(config.data)
-     
+
     }
     // 用户token验证
     // if (window.localStorage.getItem('TOKEN')) {
@@ -50,8 +50,8 @@ ax.interceptors.response.use(
   }
 )
 /**
- * 
- * @param options 
+ *
+ * @param options
  * {
  *  url: '',
  *  method: 'post',
@@ -66,7 +66,7 @@ const fetch: any = (options: any) => {
   }
   const settings = Object.assign(true, defaultOption, options)
 
-  if (env.mock_env) {
+  if (env.mockEnv) {
     settings.method = 'get'
   }
   settings.url = env.rootUrl + settings.url
