@@ -2,7 +2,7 @@
  * @Author: huangzhuangjia
  * @Date: 2018-05-02 15:06:44
  * @Last Modified by: huangzhuangjia
- * @Last Modified time: 2018-05-03 11:15:44
+ * @Last Modified time: 2018-06-01 15:21:53
  */
 import axios from 'axios'
 import env from '@/config/env'

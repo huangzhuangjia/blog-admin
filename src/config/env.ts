@@ -16,7 +16,6 @@ if (process.env.NODE_ENV === 'mocking') {
 if (process.env.NODE_ENV === 'development') {
   rootUrl = 'http://' + serverProvider[currentProvider] // 当前服务提供者
 }
-
 export default {
   MOCK_PORT,
   mockEnv,

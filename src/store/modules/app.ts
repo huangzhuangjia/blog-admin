@@ -5,7 +5,7 @@ import { ActionTree, MutationTree, GetterTree } from 'vuex'
 interface IState {
   breadCrumbList: StoreState.BreadCrumbList[],
   tagNavList: StoreState.TagNavList[],
-  homeRoute: any
+  homeRoute: StoreState.TagNavList
 }
 
 const state: IState = {
@@ -15,14 +15,18 @@ const state: IState = {
 }
 
 const getters: GetterTree<IState, any> = {
-  menuList: (state: IState, getters: any, rootState: any): StoreState.MenuList[] => getMenuByRouter(routers, rootState.user.access)
+  menuList: (
+    state: IState,
+    getters: any,
+    rootState: any
+  ): StoreState.MenuList[] => getMenuByRouter(routers, rootState.user.access)
 }
 
 const actions: ActionTree<IState, any> = {
-  setBreadCrumb ({commit}, list) {
+  setBreadCrumb ({ commit }, list) {
     commit('SET_BREADCRUMB', list)
   },
-  setTagNavList ({ commit }, list) {
+  setTagNavList ({ commit }, list: StoreState.TagNavList[]) {
     let tagNavList: StoreState.TagNavList[]
     if (list) {
       tagNavList = [...list]
@@ -32,19 +36,31 @@ const actions: ActionTree<IState, any> = {
     }
     commit('SET_TAG_NAVLIST', tagNavList)
   },
-  addTag ({ commit }, item) {
+  addTag ({ state, commit }, item) {
     commit('ADD_TAG', item)
   }
 }
 
 const mutations: MutationTree<IState> = {
-  'SET_BREADCRUMB' (state: IState, routeMetched) {
-    state.breadCrumbList = getBreadCrumbList(routeMetched)
+  'SET_BREADCRUMB' (
+    state: IState,
+    routeMatched
+  ): void {
+    state.breadCrumbList = getBreadCrumbList(routeMatched)
   },
-  'SET_TAG_NAVLIST' (state: IState, list: StoreState.TagNavList[]) {
+
+  'SET_TAG_NAVLIST' (
+    state: IState,
+    list: StoreState.TagNavList[]
+  ): void {
     state.tagNavList = [...list]
   },
-  'ADD_TAG' (state: IState, item, type: string = 'unshift') {
+
+  'ADD_TAG' (
+    state: IState,
+    item: StoreState.TagNavList,
+    type: string = 'unshift'
+  ): void {
     if (state.tagNavList.findIndex((tag: any) => tag.name === item.name) < 0) {
       if (type === 'push') state.tagNavList.push(item)
       else state.tagNavList.unshift(item)

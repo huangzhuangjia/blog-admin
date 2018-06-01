@@ -35,10 +35,23 @@
   import { Component, Vue, Watch } from 'vue-property-decorator'
   import { Route } from 'vue-router'
   import { getNewTagList } from '@/config/util'
+  import {
+    State,
+    Getter,
+    Action,
+    Mutation,
+    namespace
+  } from 'vuex-class'
   import sideMenu from '@/components/side-menu/index.vue'
   import headerBar from '@/components/header-bar'
   import tagsNav from '@/components/tags-nav'
   import user from '@/components/user'
+
+  interface IState {
+    breadCrumbList: StoreState.BreadCrumbList[],
+    tagNavList: StoreState.TagNavList[],
+    homeRoute: StoreState.TagNavList
+  }
 
   @Component({
     name: 'Main',
@@ -53,21 +66,28 @@
     }
   })
   export default class Main extends Vue {
+    @State('app') app: IState
+    @Getter('menuList') _menuList:  StoreState.MenuList[]
+    @Action('setTagNavList') setTagNavList: any
+    @Action('setBreadCrumb') setBreadCrumb: any
+    @Action('addTag') addTag: any
+    @Action('getUserInfo') getUserInfo: any
+
     private collapsed: boolean = false
-    private minLogo: string = require('@/assets/images/logo-min.jpg')
     private maxLogo: string = require('@/assets/images/logo.jpg')
+    private minLogo: string = require('@/assets/images/logo-min.jpg')
 
     private get tagNavList (): StoreState.TagNavList[] {
-      return this.$store.state.app.tagNavList
+      return this.app.tagNavList
     }
     private get userAvator () {
-      return this.$store.state.user.avatorImgPath
+      return this.$store.state.user.info.gravatar
     }
     private get cacheList () {
       return this.tagNavList.length ? this.tagNavList.filter(item => !(item.meta && item.meta.notCache)) : []
     }
     private get menuList (): StoreState.MenuList[] {
-      return this.$store.getters.menuList
+      return this._menuList
     }
 
     private turnToPage (name: string): void {
@@ -79,7 +99,7 @@
       this.collapsed = state
     }
     private handleCloseTag (res: StoreState.TagNavList[], type: string) {
-      this.$store.dispatch('setTagNavList', res)
+      this.setTagNavList(res)
       if (type === 'all') this.turnToPage('home')
     }
     private handleClick (item: StoreState.TagNavList): void {
@@ -87,16 +107,17 @@
     }
     @Watch('$route')
     private routeChange (newRoute: Route): void {
-     this.$store.dispatch('setBreadCrumb', newRoute.matched)
-     this.$store.dispatch('setTagNavList', getNewTagList(this.tagNavList, newRoute))
+     this.setBreadCrumb(newRoute.matched)
+     this.setTagNavList(getNewTagList(this.tagNavList, newRoute))
     }
     private mounted () {
       /**
        * @description 初始化设置面包屑导航和标签导航
        */
-      this.$store.dispatch('setBreadCrumb', this.$route.matched)
-      this.$store.dispatch('addTag', this.$store.state.app.homeRoute)
-      this.$store.dispatch('setTagNavList')
+      this.setTagNavList()
+      this.addTag(this.$store.state.app.homeRoute)
+      this.setBreadCrumb(this.$route.matched)
+      this.getUserInfo()
     }
   }
 </script>

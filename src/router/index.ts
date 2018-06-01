@@ -1,4 +1,5 @@
 import Vue , { AsyncComponent } from 'vue'
+import iView from 'iview'
 import Router, { RouteConfig, Route, NavigationGuard, RawLocation } from 'vue-router'
 import routers from './routers'
 
@@ -11,6 +12,11 @@ const router: Router = new Router({
   mode: 'history',
   base: __dirname,
   routes
+})
+
+router.afterEach(to => {
+  iView.LoadingBar.finish()
+  window.scrollTo(0, 0)
 })
 
 export default router

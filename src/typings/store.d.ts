@@ -1,3 +1,4 @@
+
 declare namespace StoreState {
    // 用户数据
    export interface User {
@@ -18,9 +19,10 @@ declare namespace StoreState {
   }
   // 路由meta
   interface Meta {
-    icon: string,
-    title: string,
-    notCache?: string
+    icon?: string,
+    title?: string,
+    notCache?: boolean,
+    hideInMenu?: boolean
   }
   // 头部面包屑列表
   export interface BreadCrumbList {
@@ -33,7 +35,8 @@ declare namespace StoreState {
   export interface TagNavList {
     name: string,
     path: string,
-    meta: Meta
+    meta: Meta,
+    component?: any
   }
   // 菜单列表
   export interface MenuList {

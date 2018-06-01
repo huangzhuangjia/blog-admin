@@ -1,10 +1,15 @@
 <template>
-  <div>home</div>
+  <div>{{name}}</div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { Component, Vue, Watch } from 'vue-property-decorator'
+
+@Component({
   name: 'home'
+})
+export default class Home extends Vue {
+  private name: string = 'home'
 }
 </script>
 

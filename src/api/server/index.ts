@@ -6,17 +6,17 @@ import MOCK_API from '@/api/mock/mockAPI'
 let service: any = {}
 
 service = {
-  login: (_data: any) => fetch({
+  getUserInfo: (_data: any) => fetch({
     methods: 'get',
     data: _data,
-    url: API.User.Login
+    url: API.User.userInfo
   })
 }
 
 if (env.mockEnv) {
   service = {
-    login : (_data: any) => {
-      return fetch({ url: MOCK_API.User.Login, data: _data })
+    getUserInfo : (_data: any) => {
+      return fetch({ url: MOCK_API.User.userInfo, data: _data })
     }
   }
 }

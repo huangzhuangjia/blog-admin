@@ -3,9 +3,6 @@
  */
 export default {
   User: {
-    Login: '/login'
-  },
-  Test: {
-    TestApi: '/test'
+    userInfo: '/user'
   }
 }

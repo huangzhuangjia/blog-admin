@@ -3,12 +3,12 @@ import API from '@/api/server'
 
 interface IState {
   login: boolean,
-  user: StoreState.User
+  info: StoreState.User
 }
 
 const state: IState = {
   login: false,
-  user: {
+  info: {
     _id: '',
     name: '',
     username: '',
@@ -17,14 +17,15 @@ const state: IState = {
 }
 
 const actions: ActionTree<IState, any>  = {
-  async login (
+  async getUserInfo (
     {commit}
   ): Promise<Ajax.AjaxResponse> {
-    commit('USER_LOGIN')
-    const res: Ajax.AxiosResponse = await API.login()
+    const res: Ajax.AxiosResponse = await API.getUserInfo()
     if (res && res.data.success) {
+      commit('GET_USER_INFO', res.data.list)
       console.log('success')
     } else {
+      commit('GET_USER_INFO')
       console.log('error')
     }
     return res.data
@@ -32,8 +33,9 @@ const actions: ActionTree<IState, any>  = {
 }
 
 const mutations: MutationTree<IState>  = {
-  'USER_LOGIN' (state: IState): void {
-    state.login = true
+  'GET_USER_INFO' (state: IState, user): void {
+    user ? state.login = true : state.login = false
+    state.info = user
   }
 }
 export default {
