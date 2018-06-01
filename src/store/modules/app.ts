@@ -6,7 +6,6 @@ interface IState {
   breadCrumbList: StoreState.BreadCrumbList[],
   tagNavList: StoreState.TagNavList[],
   homeRoute: any
-  // menuList: StoreState.MenuList[]
 }
 
 const state: IState = {

@@ -1,6 +1,6 @@
-# yyschool
+# iview-admin-template
 
-> yyschool1.0  （基于Vue2.5全家桶 + TypeScript）
+> 一套后台管理系统模板，集成了Vue2.5全家桶 + TypeScript + UI框架 iview + json-server
 
 ## Usage
 
