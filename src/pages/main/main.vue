@@ -1,7 +1,6 @@
 <template>
-  <div class="layout">
   <Layout style="height: 100%" class="main">
-    <Sider breakpoint="md" collapsible :width="210" :collapsed-width="64" v-model="collapsed">
+    <Sider breakpoint="md" hide-trigger collapsible :width="210" :collapsed-width="64" v-model="collapsed">
       <side-menu accordion :active-name="$route.name" :collapsed="collapsed" @on-select="turnToPage" :menu-list="menuList">
         <!-- 需要放在菜单上面的内容，如Logo，写在side-menu标签内部，如下 -->
         <div class="logo-con">
@@ -30,7 +29,6 @@
       </Content>
     </Layout>
   </Layout>
-  </div>
 </template>
 
 <script lang="ts">
@@ -56,8 +54,8 @@
   })
   export default class Main extends Vue {
     private collapsed: boolean = false
-    private minLogo: string = './assets/images/logo-min.jpg'
-    private maxLogo: string = './assets/images/logo.jpg'
+    private minLogo: string = require('@/assets/images/logo-min.jpg')
+    private maxLogo: string = require('@/assets/images/logo.jpg')
 
     private get tagNavList (): StoreState.TagNavList[] {
       return this.$store.state.app.tagNavList
@@ -96,9 +94,9 @@
       /**
        * @description 初始化设置面包屑导航和标签导航
        */
-      this.$store.dispatch('app/setBreadCrumb', this.$route.matched)
-      this.$store.dispatch('app/addTag', this.$store.state.app.homeRoute)
-      this.$store.dispatch('app/setTagNavList')
+      this.$store.dispatch('setBreadCrumb', this.$route.matched)
+      this.$store.dispatch('addTag', this.$store.state.app.homeRoute)
+      this.$store.dispatch('setTagNavList')
     }
   }
 </script>

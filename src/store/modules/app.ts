@@ -6,6 +6,7 @@ interface IState {
   breadCrumbList: StoreState.BreadCrumbList[],
   tagNavList: StoreState.TagNavList[],
   homeRoute: any
+  // menuList: StoreState.MenuList[]
 }
 
 const state: IState = {
@@ -15,25 +16,25 @@ const state: IState = {
 }
 
 const getters: GetterTree<IState, any> = {
-  menuList: (state: IState, getters: any, rootState: any): StoreState.MenuList => getMenuByRouter(routers, rootState.user.access)
+  menuList: (state: IState, getters: any, rootState: any): StoreState.MenuList[] => getMenuByRouter(routers, rootState.user.access)
 }
 
 const actions: ActionTree<IState, any> = {
   setBreadCrumb ({commit}, list) {
-    let tagNavList: StoreState.TagNavList[] = []
+    commit('SET_BREADCRUMB', list)
+  },
+  setTagNavList ({ commit }, list) {
+    let tagNavList: StoreState.TagNavList[]
     if (list) {
       tagNavList = [...list]
       setTagNavListInLocalstorage(tagNavList)
     } else {
       tagNavList = getTagNavListFromLocalstorage()
     }
-    commit('SET_BREADCRUMB', tagNavList)
+    commit('SET_TAG_NAVLIST', tagNavList)
   },
-  setTagNavList ({ commit }, list) {
-    commit('SET_TAG_NAVLIST', list)
-  },
-  addTag ({ commit }, {item, type}) {
-    commit('ADD_TAG', item, type)
+  addTag ({ commit }, item) {
+    commit('ADD_TAG', item)
   }
 }
 
@@ -41,10 +42,10 @@ const mutations: MutationTree<IState> = {
   'SET_BREADCRUMB' (state: IState, routeMetched) {
     state.breadCrumbList = getBreadCrumbList(routeMetched)
   },
-  'SET_TAG_NAVLIST' (state: IState, list) {
+  'SET_TAG_NAVLIST' (state: IState, list: StoreState.TagNavList[]) {
     state.tagNavList = [...list]
   },
-  'ADD_TAG' (state: IState, item, type = 'unshift') {
+  'ADD_TAG' (state: IState, item, type: string = 'unshift') {
     if (state.tagNavList.findIndex((tag: any) => tag.name === item.name) < 0) {
       if (type === 'push') state.tagNavList.push(item)
       else state.tagNavList.unshift(item)
@@ -53,8 +54,8 @@ const mutations: MutationTree<IState> = {
   }
 }
 export default {
-  namespaced: true,
   state,
+  getters,
   actions,
   mutations
 }

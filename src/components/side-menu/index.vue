@@ -88,7 +88,7 @@ export default class sideMenu extends Vue {
   }
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .side-menu-wrapper{
   -webkit-touch-callout: none;
   -webkit-user-select: none;

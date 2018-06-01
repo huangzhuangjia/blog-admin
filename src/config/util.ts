@@ -77,7 +77,7 @@ export const showTitle = (item: any, vm: Vue) => (item.meta && item.meta.title) 
 /**
  * @description 本地存储和获取标签导航列表
  */
-export const setTagNavListInLocalstorage = (list: any[]) => {
+export const setTagNavListInLocalstorage = (list: any) => {
   localStorage.tagNaveList = JSON.stringify(list)
 }
 /**

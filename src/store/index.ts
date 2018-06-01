@@ -2,7 +2,7 @@
  * @Author: huangzhuangjia
  * @Date: 2018-05-02 14:16:35
  * @Last Modified by: huangzhuangjia
- * @Last Modified time: 2018-05-31 17:05:30
+ * @Last Modified time: 2018-06-01 11:54:33
  */
 
 import Vue from 'vue'
