@@ -1,6 +1,6 @@
-import Vue , { AsyncComponent } from 'vue'
+import Vue from 'vue'
 import iView from 'iview'
-import Router, { RouteConfig, Route, NavigationGuard, RawLocation } from 'vue-router'
+import Router, { RouteConfig } from 'vue-router'
 import routers from './routers'
 
 Vue.use(Router)

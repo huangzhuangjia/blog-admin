@@ -14,3 +14,7 @@ exports.user = {
   message: '获取成功'
 }
 
+exports.logout = {
+  success: true,
+  message: '退出成功'
+}

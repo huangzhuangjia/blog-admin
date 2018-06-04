@@ -10,11 +10,14 @@
     </template>
   </Submenu>
 </template>
-<script>
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
 import mixin from './mixin'
 import itemMixin from './item-mixin'
-export default {
+@Component({
   name: 'sideMenuItem',
   mixins: [ mixin, itemMixin ]
+})
+export default class SideMenuItem extends Vue {
 }
 </script>

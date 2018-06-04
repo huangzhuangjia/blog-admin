@@ -12,12 +12,6 @@
         </DropdownMenu>
       </Dropdown>
     </div>
-    <!-- <div class="btn-con left-btn">
-      <Button icon="chevron-left" type="text" @click="handleScroll(240)"></Button>
-    </div>
-    <div class="btn-con right-btn">
-      <Button icon="chevron-right" type="text" @click="handleScroll(-240)"></Button>
-    </div> -->
     <div class="scroll-outer" ref="scrollOuter">
       <div ref="scrollBody" class="scroll-body" :style="{left: tagBodyLeft + 'px'}">
         <transition-group name="taglist-moving-animation">
@@ -38,69 +32,67 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Vue, Watch, Prop } from 'vue-property-decorator'
 import { showTitle } from '@/config/util'
-export default {
-  name: 'tagsNav',
-  props: {
-    value: Object,
-    list: {
-      type: Array,
-      default () {
-        return []
-      }
+@Component({
+  name: 'tagsNav'
+})
+export default class TagsNav extends Vue {
+  $refs: {
+    scrollOuter: HTMLDivElement,
+    scrollBody: HTMLDivElement
+  }
+  private tagBodyLeft: number = 0
+
+  @Prop({ default: {} })
+  private value: any
+  @Prop({ default: () => [] })
+  private list: any[]
+
+  private handlescroll (e: any) {
+    var type = e.type
+    let delta = 0
+    if (type === 'DOMMouseScroll' || type === 'mousewheel') {
+      delta = (e.wheelDelta) ? e.wheelDelta : -(e.detail || 0) * 40
     }
-  },
-  data () {
-    return {
-      tagBodyLeft: 0
-    }
-  },
-  methods: {
-    handlescroll (e) {
-      var type = e.type
-      let delta = 0
-      if (type === 'DOMMouseScroll' || type === 'mousewheel') {
-        delta = (e.wheelDelta) ? e.wheelDelta : -(e.detail || 0) * 40
-      }
-      this.handleScroll(delta)
-    },
-    handleScroll (offset) {
-      if (offset > 0) {
-        this.tagBodyLeft = Math.min(0, this.tagBodyLeft + offset)
-      } else {
-        if (this.$refs.scrollOuter.offsetWidth < this.$refs.scrollBody.offsetWidth) {
-          if (this.tagBodyLeft < -(this.$refs.scrollBody.offsetWidth - this.$refs.scrollOuter.offsetWidth)) {
-            this.tagBodyLeft = this.tagBodyLeft
-          } else {
-            this.tagBodyLeft = Math.max(this.tagBodyLeft + offset, this.$refs.scrollOuter.offsetWidth - this.$refs.scrollBody.offsetWidth)
-          }
+    this.handleScroll(delta)
+  }
+  private handleScroll (offset: number) {
+    if (offset > 0) {
+      this.tagBodyLeft = Math.min(0, this.tagBodyLeft + offset)
+    } else {
+      if (this.$refs.scrollOuter.offsetWidth < this.$refs.scrollBody.offsetWidth) {
+        if (this.tagBodyLeft < -(this.$refs.scrollBody.offsetWidth - this.$refs.scrollOuter.offsetWidth)) {
+          this.tagBodyLeft = this.tagBodyLeft
         } else {
-          this.tagBodyLeft = 0
+          this.tagBodyLeft = Math.max(this.tagBodyLeft + offset, this.$refs.scrollOuter.offsetWidth - this.$refs.scrollBody.offsetWidth)
         }
-      }
-    },
-    handleTagsOption (type) {
-      if (type === 'close-all') {
-        // 关闭所有，除了home
-        let res = this.list.filter(item => item.name === 'home')
-        this.$emit('on-close', res, 'all')
       } else {
-        // 关闭除当前页和home页的其他页
-        let res = this.list.filter(item => item.name === this.value.name || item.name === 'home')
-        this.$emit('on-close', res, 'others')
+        this.tagBodyLeft = 0
       }
-    },
-    handleClose (e, name) {
-      let res = this.list.filter(item => item.name !== name)
-      this.$emit('on-close', res, undefined, name)
-    },
-    handleClick (item) {
-      this.$emit('input', item)
-    },
-    showTitleInside (item) {
-      return showTitle(item, this)
     }
+  }
+  private handleTagsOption (type: string) {
+    if (type === 'close-all') {
+      // 关闭所有，除了home
+      let res = this.list.filter(item => item.name === 'home')
+      this.$emit('on-close', res, 'all')
+    } else {
+      // 关闭除当前页和home页的其他页
+      let res = this.list.filter(item => item.name === this.value.name || item.name === 'home')
+      this.$emit('on-close', res, 'others')
+    }
+  }
+  private handleClose (e: any, name: string) {
+    let res = this.list.filter(item => item.name !== name)
+    this.$emit('on-close', res, undefined, name)
+  }
+  private handleClick (item: StoreState.TagNavList) {
+    this.$emit('input', item)
+  }
+  private showTitleInside (item: StoreState.TagNavList) {
+    return showTitle(item, this)
   }
 }
 </script>

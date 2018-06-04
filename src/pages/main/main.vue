@@ -39,8 +39,7 @@
     State,
     Getter,
     Action,
-    Mutation,
-    namespace
+    Mutation
   } from 'vuex-class'
   import sideMenu from '@/components/side-menu/index.vue'
   import headerBar from '@/components/header-bar'
@@ -80,10 +79,10 @@
     private get tagNavList (): StoreState.TagNavList[] {
       return this.app.tagNavList
     }
-    private get userAvator () {
+    private get userAvator (): string {
       return this.$store.state.user.info.gravatar
     }
-    private get cacheList () {
+    private get cacheList (): StoreState.TagNavList[] {
       return this.tagNavList.length ? this.tagNavList.filter(item => !(item.meta && item.meta.notCache)) : []
     }
     private get menuList (): StoreState.MenuList[] {
@@ -98,7 +97,7 @@
     private handleCollapsedChange (state: boolean): void {
       this.collapsed = state
     }
-    private handleCloseTag (res: StoreState.TagNavList[], type: string) {
+    private handleCloseTag (res: StoreState.TagNavList[], type: string): void {
       this.setTagNavList(res)
       if (type === 'all') this.turnToPage('home')
     }
@@ -110,7 +109,7 @@
      this.setBreadCrumb(newRoute.matched)
      this.setTagNavList(getNewTagList(this.tagNavList, newRoute))
     }
-    private mounted () {
+    private mounted (): void {
       /**
        * @description 初始化设置面包屑导航和标签导航
        */

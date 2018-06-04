@@ -9,6 +9,7 @@ export default [
   {
     path: '/',
     name: 'Home',
+    redirect: '/home',
     component: main,
     meta: {
       hideInMenu: true,

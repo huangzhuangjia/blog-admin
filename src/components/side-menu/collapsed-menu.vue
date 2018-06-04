@@ -9,10 +9,11 @@
     </DropdownMenu>
   </Dropdown>
 </template>
-<script>
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
 import mixin from './mixin'
 import itemMixin from './item-mixin'
-export default {
+@Component({
   name: 'collapsedMenu',
   mixins: [ mixin, itemMixin ],
   props: {
@@ -24,11 +25,11 @@ export default {
       type: Number,
       default: 16
     }
-  },
-  methods: {
-    handleClick (name) {
-      this.$emit('on-click', name)
-    }
+  }
+})
+export default class CollaspedMenu extends Vue {
+  private handleClick (name: string): void {
+    this.$emit('on-click', name)
   }
 }
 </script>

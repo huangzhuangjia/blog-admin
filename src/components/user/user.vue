@@ -10,31 +10,29 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Action } from 'vuex-class'
 import './user.less'
 import { mapActions } from 'vuex'
-export default {
-  name: 'user',
-  props: {
-    userAvator: {
-      type: String,
-      default: ''
-    }
-  },
-  methods: {
-    ...mapActions([
-      'handleLogOut'
-    ]),
-    handleClick (name) {
-      switch (name) {
-        case 'logout':
-          this.handleLogOut().then(() => {
-            this.$router.push({
-              name: 'login'
-            })
-          })
-          break
-      }
+
+@Component({
+  name: 'user'
+})
+export default class User extends Vue {
+  @Prop({ default: '' })
+  private userAvator: string
+
+  @Action('handleLogOut') handleLogOut: any
+
+  private async handleClick (name: string): Promise<void> {
+    switch (name) {
+      case 'logout':
+        const res = await this.handleLogOut()
+        res.success && this.$router.push({
+          name: 'login'
+        })
+        break
     }
   }
 }

@@ -7,28 +7,28 @@
     </div>
   </div>
 </template>
-<script>
+<script lang="ts">
+import { Component, Vue, Prop } from 'vue-property-decorator'
 import siderTrigger from './sider-trigger'
 import customBreadCrumb from './custom-bread-crumb'
 import './header-bar.less'
-export default {
+@Component({
   name: 'headerBar',
   components: {
     siderTrigger,
     customBreadCrumb
-  },
-  props: {
-    collapsed: Boolean
-  },
-  computed: {
-    breadCrumbList () {
-      return this.$store.state.app.breadCrumbList
-    }
-  },
-  methods: {
-    handleCollpasedChange (state) {
-      this.$emit('on-coll-change', state)
-    }
+  }
+})
+export default class HeaderBar extends Vue {
+
+  @Prop({ default: false })
+  private collapsed: boolean
+
+  private get breadCrumbList (): StoreState.BreadCrumbList[] {
+    return this.$store.state.app.breadCrumbList
+  }
+  private handleCollpasedChange (state: boolean): void {
+    this.$emit('on-coll-change', state)
   }
 }
 </script>

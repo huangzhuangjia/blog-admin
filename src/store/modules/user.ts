@@ -29,6 +29,14 @@ const actions: ActionTree<IState, any>  = {
       console.log('error')
     }
     return res.data
+  },
+
+  async handleLogOut (
+    {commit}
+  ): Promise<Ajax.AjaxResponse> {
+    const res: Ajax.AxiosResponse = await API.handleLogOut()
+    commit('USRE_LOGlOUT')
+    return res.data
   }
 }
 
@@ -36,6 +44,9 @@ const mutations: MutationTree<IState>  = {
   'GET_USER_INFO' (state: IState, user): void {
     user ? state.login = true : state.login = false
     state.info = user
+  },
+  'USRE_LOGlOUT' (state: IState, user) {
+    state.login = false
   }
 }
 export default {

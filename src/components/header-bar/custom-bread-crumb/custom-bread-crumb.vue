@@ -5,29 +5,23 @@
     </Breadcrumb>
   </div>
 </template>
-<script>
+<script lang="ts">
+import { Component, Vue, Prop } from 'vue-property-decorator'
 import { showTitle } from '@/config/util'
 import './custom-bread-crumb.less'
-export default {
-  name: 'customBreadCrumb',
-  props: {
-    list: {
-      type: Array,
-      default: () => []
-    },
-    fontSize: {
-      type: Number,
-      default: 14
-    },
-    showIcon: {
-      type: Boolean,
-      default: false
-    }
-  },
-  methods: {
-    showTitle (item) {
-      return showTitle(item, this)
-    }
+@Component({
+  name: 'customBreadCrumb'
+})
+export default class CustomBreadCrumb extends Vue {
+  @Prop({ default: () => [] })
+  private list: StoreState.BreadCrumbList[]
+  @Prop({ default: 14 })
+  private fontSize: number
+  @Prop({ default: false })
+  private showIcon: boolean
+
+  private showTitle (item: StoreState.BreadCrumbList): StoreState.BreadCrumbList {
+    return showTitle(item, this)
   }
 }
 </script>
