@@ -1,6 +1,16 @@
-import { getBreadCrumbList, setTagNavListInLocalstorage, getMenuByRouter, getTagNavListFromLocalstorage, getHomeRoute } from '@/config/util'
+import {
+  getBreadCrumbList,
+  setTagNavListInLocalstorage,
+  getMenuByRouter,
+  getTagNavListFromLocalstorage,
+  getHomeRoute
+} from '@/config/util'
 import routers from '@/router/routers'
-import { ActionTree, MutationTree, GetterTree } from 'vuex'
+import {
+  ActionTree,
+  MutationTree,
+  GetterTree
+} from 'vuex'
 
 interface IState {
   breadCrumbList: StoreState.BreadCrumbList[],
