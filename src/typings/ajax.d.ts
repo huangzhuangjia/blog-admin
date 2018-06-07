@@ -9,15 +9,15 @@ declare namespace Ajax {
   export interface AjaxResponse {
     /**
      * 状态
-     * @type { boolean }
+     * @type { number }
      */
-    success: boolean,
+    code: number,
 
     /**
      * 数据
      * @type { any }
      */
-    list?: any,
+    result?: any,
 
     /**
      * 消息

@@ -1,11 +1,20 @@
 import Vue , { AsyncComponent } from 'vue'
 import parentView from '@/components/parent-view'
+const login: AsyncComponent = () => import('@/pages/login/login.vue')
 // 首页
 const main: AsyncComponent = () => import('@/pages/main/main.vue')
 // 富文本编辑器
 const textEditor: AsyncComponent = () => import('@/pages/components/text-editor/text-editor.vue')
 
 export default [
+  {
+    path: '/login',
+    name: 'login',
+    meta: {
+      hideInMenu: true
+    },
+    component: login
+  },
   {
     path: '/',
     name: 'Home',

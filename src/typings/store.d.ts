@@ -5,9 +5,6 @@ declare namespace StoreState {
     /** 唯一标识 */
     readonly _id: string,
 
-    /** 名称 */
-    name: string,
-
     /** 用户名 */
     username: string,
 
@@ -17,6 +14,15 @@ declare namespace StoreState {
     /** 头像 */
     gravatar: string
   }
+   // 登录
+   export interface Login {
+    /** 用户名 */
+    username: string,
+
+    /** 密码 */
+    password: string
+  }
+  
   // 路由meta
   interface Meta {
     icon?: string,

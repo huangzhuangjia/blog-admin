@@ -16,7 +16,7 @@ switch (NODE_ENV) {
     break
   // 开发环境
   case 'development':
-    rootUrl = 'http://localhost:8082'
+    rootUrl = 'http://localhost:8082/api/'
     break
   // 生产环境
   case 'production':

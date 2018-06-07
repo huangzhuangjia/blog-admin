@@ -14,7 +14,8 @@
           ]
         },
         "types": [
-            "node"
+            "node",
+            "webpack-env"
         ],
         "typeRoots": [
           // add path to @types

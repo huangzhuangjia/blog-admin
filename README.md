@@ -1,6 +1,6 @@
-# iview-admin-template
+# blog-admin
 
-> 一套后台管理系统模板，集成了Vue2.5全家桶 + TypeScript + UI框架 iview + json-server + mockjs
+> 博客后台管理系统（开发中），集成了Vue2.5全家桶 + TypeScript + UI框架 iview + json-server + mockjs
 
 ## Usage
 

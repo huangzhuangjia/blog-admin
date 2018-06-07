@@ -70,7 +70,6 @@
     @Action('setTagNavList') setTagNavList: any
     @Action('setBreadCrumb') setBreadCrumb: any
     @Action('addTag') addTag: any
-    @Action('getUserInfo') getUserInfo: any
 
     private collapsed: boolean = false
     private maxLogo: string = require('@/assets/images/logo.jpg')
@@ -80,7 +79,7 @@
       return this.app.tagNavList
     }
     private get userAvator (): string {
-      return this.$store.state.user.info.gravatar
+      return this.$store.state.user.userInfo.gravatar
     }
     private get cacheList (): StoreState.TagNavList[] {
       return this.tagNavList.length ? this.tagNavList.filter(item => !(item.meta && item.meta.notCache)) : []
@@ -116,7 +115,6 @@
       this.setTagNavList()
       this.addTag(this.$store.state.app.homeRoute)
       this.setBreadCrumb(this.$route.matched)
-      this.getUserInfo()
     }
   }
 </script>

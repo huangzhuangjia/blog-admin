@@ -3,7 +3,8 @@
  */
 export default {
   User: {
-    userInfo: '/user',
+    login: '/login',
+    userInfo: '/getUserInfo',
     userLogout: '/logout'
   }
 }

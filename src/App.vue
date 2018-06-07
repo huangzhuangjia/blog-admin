@@ -9,6 +9,9 @@
   @Component({
   })
   export default class App extends Vue {
+    private beforeCreate () {
+      this.$store.dispatch('getUserInfo')
+    }
   }
 </script>
 
