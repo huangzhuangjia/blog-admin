@@ -21,9 +21,6 @@ if (store) { // 模块动态注册
 Vue.use(Meta)
 Vue.use(iView)
 
-// import { Message } from 'iview'
-// Vue.prototype.$message = Message
-
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

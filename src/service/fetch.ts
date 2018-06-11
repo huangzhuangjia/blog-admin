@@ -2,11 +2,13 @@
  * @Author: huangzhuangjia
  * @Date: 2018-05-02 15:06:44
  * @Last Modified by: huangzhuangjia
- * @Last Modified time: 2018-06-07 14:26:56
+ * @Last Modified time: 2018-06-11 18:18:46
  */
 import axios from 'axios'
 import env from '@/config/env'
 import querystring from 'querystring'
+
+import { success, error } from '../config/response'
 import { loginIn } from '@/config/util'
 import app from '../main'
 
@@ -42,15 +44,15 @@ ax.interceptors.response.use(
   (response: any) => {
     return response
   },
-  (error: any) => {
+  (err: any) => {
     if (!loginIn()) {
-      console.log('登陆超时')
+      error('登陆超时')
       app.$router.push({
         path: '/login',
         query: { redirect: app.$route.fullPath }
       })
     }
-    return Promise.reject(error)
+    return Promise.reject(err)
   }
 )
 

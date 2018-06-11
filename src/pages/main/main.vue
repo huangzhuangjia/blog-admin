@@ -54,9 +54,6 @@
 
   @Component({
     name: 'Main',
-    metaInfo: {
-      title: 'iview-ts-template'
-    },
     components: {
       sideMenu,
       headerBar,
@@ -98,6 +95,7 @@
     }
     private handleCloseTag (res: StoreState.TagNavList[], type: string): void {
       this.setTagNavList(res)
+      this.turnToPage(res[res.length - 1].name)
       if (type === 'all') this.turnToPage('home')
     }
     private handleClick (item: StoreState.TagNavList): void {

@@ -17,6 +17,12 @@ let User: any  = {
     return fetch.get(API.User.userInfo)
                 .then((res: Ajax.AxiosResponse) => res.data)
                 .catch((e: any) => console.error(e))
+  },
+  // 登出
+  handleLogout: (): Promise<Ajax.AxiosResponse>  => {
+    return fetch.get(API.User.userLogout)
+                .then((res: Ajax.AxiosResponse) => res.data)
+                .catch((e: any) => console.error(e))
   }
 }
 
@@ -32,6 +38,12 @@ if (env.mockEnv) {
      // 获取用户信息
     getUserInfo: (): Promise<Ajax.AxiosResponse>  => {
       return fetch.get(MOCK_API.User.userInfo)
+                  .then((res: Ajax.AxiosResponse) => res.data)
+                  .catch((e: any) => console.error(e))
+    },
+     // 登出
+    handleLogout: (): Promise<Ajax.AxiosResponse>  => {
+      return fetch.get(MOCK_API.User.userLogout)
                   .then((res: Ajax.AxiosResponse) => res.data)
                   .catch((e: any) => console.error(e))
     }

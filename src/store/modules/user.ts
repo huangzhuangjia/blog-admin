@@ -1,6 +1,6 @@
 import Vuex, { ActionTree, MutationTree } from 'vuex'
 import API from '@/api/server'
-// import { success, error } from '../../config/response'
+import { success, error } from '../../config/response'
 
 interface IState {
   login: boolean,
@@ -27,9 +27,9 @@ const actions: ActionTree<IState, any>  = {
     if (res && res.code === 1) {
       commit('USRE_LOGIN', res.result.token)
       window.localStorage.setItem('TOKEN', JSON.stringify(res.result))
-      console.log('登录成功')
+      success('登录成功')
     } else {
-      console.log(res.message)
+      error(res.message)
     }
     return res
   },
@@ -40,18 +40,21 @@ const actions: ActionTree<IState, any>  = {
     const res: Ajax.AjaxResponse = await API.User.getUserInfo()
     if (res && res.code === 1) {
       commit('GET_USER_INFO', res.result)
-      console.log('success')
+    }
+    return res
+  },
+
+  async handleLogOut (
+    {commit}
+  ): Promise<Ajax.AjaxResponse> {
+    const res: Ajax.AjaxResponse = await API.User.handleLogout()
+    if (res && res.code === 1) {
+      commit('USRE_LOGOUT')
+      window.localStorage.removeItem('TOKEN')
+      success('退出成功')
     }
     return res
   }
-
-  // async handleLogOut (
-  //   {commit}
-  // ): Promise<Ajax.AjaxResponse> {
-  //   const res: Ajax.AxiosResponse = await API.handleLogOut()
-  //   commit('USRE_LOGOUT')
-  //   return res.data
-  // }
 }
 
 const mutations: MutationTree<IState>  = {

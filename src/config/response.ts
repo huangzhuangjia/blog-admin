@@ -1,16 +1,15 @@
-// import Vue from 'vue'
+import app from '../main'
 
-// export function error (message: string): void {
-//   Vue.$Message.error({
-//     title: '错误',
-//     message
-//   })
-// }
+export function error (content: string): void {
+  (app as any).$Message.error({
+    duration: 2,
+    content
+  })
+}
 
-// export function success (message: string): void {
-//   Vue.$Message.success({
-//     title: '成功',
-//     duration: 2000,
-//     message
-//   })
-// }
+export function success (content: string): void {
+  (app as any).$Message.success({
+    duration: 2,
+    content
+  })
+}

@@ -29,7 +29,7 @@ export default class User extends Vue {
     switch (name) {
       case 'logout':
         const res = await this.handleLogOut()
-        res.success && this.$router.push({
+        res.code === 1 && this.$router.push({
           name: 'login'
         })
         break
