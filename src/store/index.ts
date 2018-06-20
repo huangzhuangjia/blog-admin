@@ -2,18 +2,12 @@
  * @Author: huangzhuangjia
  * @Date: 2018-05-02 14:16:35
  * @Last Modified by: huangzhuangjia
- * @Last Modified time: 2018-06-15 14:41:46
+ * @Last Modified time: 2018-06-20 16:07:08
  */
 
 import Vue from 'vue'
 import Vuex from 'vuex'
 import 'babel-polyfill'
-
-import API from '@/api/server'
-
-
-import app from './modules/app'
-import user from './modules/user'
 
 Vue.use(Vuex)
 

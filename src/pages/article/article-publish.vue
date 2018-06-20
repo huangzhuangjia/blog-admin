@@ -5,7 +5,7 @@
                 <Card>
                     <Form :label-width="80">
                         <FormItem label="文章标题" :error="articleError">
-                            <Input v-model="articleTitle" @on-blur="handleArticletitleBlur" icon="android-list"/>
+                            <Input v-model="articleTitle" icon="android-list"/>
                         </FormItem>
                     </Form>
                     <div class="margin-top-20">
@@ -65,193 +65,155 @@
     </div>
 </template>
 
-<script>
-import '../../../static/tinymce/tinymce.min.js'
-import './article-publish.less';
-window.tinymce.baseURL = '/static/tinymce'
-export default {
-    name: 'artical-publish',
-    data () {
-        return {
-            articleTitle: '',
-            articleError: '',
-            showLink: false,
-            fixedLink: '',
-            articlePath: '',
-            articlePathHasEdited: false,
-            editLink: false,
-            editPathButtonType: 'ghost',
-            editPathButtonText: '编辑',
-            articleStateList: [{name: '公开', value: 1}, {name: '私密', value: 2}],
-            articleState: 1,  // 文章状态
-            editOpenness: false,
-            Openness: '公开',
-            currentOpenness: '公开',
-            topArticle: false,
-            publishTime: '',
-            publishTimeType: 'immediately',
-            editPublishTime: false, // 是否正在编辑发布时间
-            articleTagSelected: [], // 文章选中的标签
-            articleTagList: [], // 所有标签列表
-            classificationList: [],
-            classificationSelected: [], // 在所有分类目录中选中的目录数组
-            offenUsedClass: [],
-            offenUsedClassSelected: [], // 常用目录选中的目录
-            classificationFinalSelected: [], // 最后实际选择的目录
-            publishLoading: false,
-            addingNewTag: false, // 添加新标签
-            newTagName: '' // 新建标签名
-        };
-    },
-    methods: {
-        handleArticletitleBlur () {
-            if (this.articleTitle.length !== 0) {
-                // this.articleError = '';
-                localStorage.articleTitle = this.articleTitle; // 本地存储文章标题
-                // if (!this.articlePathHasEdited) {
-                //     let date = new Date();
-                //     let year = date.getFullYear();
-                //     let month = date.getMonth() + 1;
-                //     let day = date.getDate();
-                //     this.fixedLink = window.location.host + '/' + year + '/' + month + '/' + day + '/';
-                //     this.articlePath = this.articleTitle;
-                //     this.articlePathHasEdited = true;
-                //     this.showLink = true;
-                // }
-            } else {
-                // this.articleError = '文章标题不可为空哦';
-                this.$Message.error('文章标题不可为空哦');
-            }
-        },
-        editArticlePath () {
-            this.editLink = !this.editLink;
-            this.editPathButtonType = this.editPathButtonType === 'ghost' ? 'success' : 'ghost';
-            this.editPathButtonText = this.editPathButtonText === '编辑' ? '完成' : '编辑';
-        },
-        handleEditOpenness () {
-            this.editOpenness = !this.editOpenness;
-        },
-        handleSaveOpenness () {
-            this.Openness = this.currentOpenness;
-            this.editOpenness = false;
-        },
-        cancelEditOpenness () {
-            this.currentOpenness = this.Openness;
-            this.editOpenness = false;
-        },
-        handleEditPublishTime () {
-            this.editPublishTime = !this.editPublishTime;
-        },
-        handleSavePublishTime () {
-            this.publishTimeType = 'timing';
-            this.editPublishTime = false;
-        },
-        cancelEditPublishTime () {
-            this.publishTimeType = 'immediately';
-            this.editPublishTime = false;
-        },
-        setPublishTime (datetime) {
-            this.publishTime = datetime;
-        },
-        setClassificationInAll (selectedArray) {
-            this.classificationFinalSelected = selectedArray.map(item => {
-                return item.title;
-            });
-            localStorage.classificationSelected = JSON.stringify(this.classificationFinalSelected); // 本地存储所选目录列表
-        },
-        setClassificationInOffen (selectedArray) {
-            this.classificationFinalSelected = selectedArray;
-        },
-        handleAddNewTag () {
-            this.addingNewTag = !this.addingNewTag;
-        },
-        createNewTag () {
-            if (this.newTagName.length !== 0) {
-                this.articleTagList.push({value: this.newTagName});
-                this.addingNewTag = false;
-                setTimeout(() => {
-                    this.newTagName = '';
-                }, 200);
-            } else {
-                this.$Message.error('请输入标签名');
-            }
-        },
-        cancelCreateNewTag () {
-            this.newTagName = '';
-            this.addingNewTag = false;
-        },
-        canPublish () {
-            if (this.articleTitle.length === 0) {
-                this.$Message.error('请输入文章标题');
-                return false;
-            } else if (tinyMCE.activeEditor.getContent().length === 0) {
-               this.$Message.error('请输入文章内容')
-            } else {
-               return true;
-            }
-        },
-        handleSaveDraft () {
-            if (!this.canPublish()) {
-                //
-            }
-        },
-        async handlePublish () {
-            if (this.canPublish()) {
-                const res = await this.$store.dispatch('postArt', {
-                  title: this.articleTitle,
-                  content: tinyMCE.activeEditor.getContent(),
-                  state: 1,
-                  publish: this.articleState
-                })
-                this.publishLoading = this.$store.state.article.posting
-            }
-        },
-        handleSelectTag () {
-            localStorage.tagsList = JSON.stringify(this.articleTagSelected); // 本地存储文章标签列表
-        }
-    },
-    computed: {
-        completeUrl () {
-            let finalUrl = this.fixedLink + this.articlePath;
-            localStorage.finalUrl = finalUrl; // 本地存储完整文章路径
-            return finalUrl;
-        }
-    },
-    mounted () {
-        this.articleTagList = [
-            {value: 'vue'},
-            {value: 'iview'},
-            {value: 'ES6'},
-            {value: 'webpack'},
-            {value: 'babel'},
-            {value: 'eslint'}
-        ];
+<script lang="ts">
+import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
+import tinymce from '../../../static/tinymce/tinymce.min.js'
+import './article-publish.less'
+import { success, error } from '../../config/response'
+(window as any).tinymce.baseURL = '/static/tinymce'
 
-        tinymce.init({
-            selector: '#articleEditor',
-            branding: false,
-            elementpath: false,
-            height: 600,
-            language: 'zh_CN',
-            menubar: 'edit insert view format table tools',
-            theme: 'modern',
-            plugins: [
-                'advlist autolink lists link image charmap print preview hr anchor pagebreak imagetools',
-                'searchreplace visualblocks visualchars code fullscreen fullpage',
-                'insertdatetime media nonbreaking save table contextmenu directionality',
-                'emoticons paste textcolor colorpicker textpattern imagetools codesample'
-            ],
-            toolbar1: ' newnote print fullscreen preview | undo redo | insert | styleselect | forecolor backcolor bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image emoticons media codesample',
-            autosave_interval: '20s',
-            image_advtab: true,
-            table_default_styles: {
-                width: '100%',
-                borderCollapse: 'collapse'
-            }
-        });
-    },
-    destroyed () {
-        tinymce.get('articleEditor').destroy();
-    }
-};
+@Component({
+  name: 'artical-publish'
+})
+export default class ArticalPublish extends Vue {
+  private articleTitle: string = ''
+  private articleError: string = ''
+  private showLink: boolean = false
+  private fixedLink: string = ''
+  private articlePath: string = ''
+  private articlePathHasEdited: boolean = false
+  private editLink: boolean = false
+  private editPathButtonType: string = 'ghost'
+  private editPathButtonText: string = '编辑'
+  private articleStateList: any = [{name: '公开', value: 1}, {name: '私密', value: 2}]
+  private articleState: number = 1  // 文章状态
+  private editOpenness: boolean = false
+  private Openness: string = '公开'
+  private currentOpenness: string = '公开'
+  private topArticle: boolean = false
+  private publishTime: string = ''
+  private publishTimeType: string = 'immediately'
+  private editPublishTime: boolean = false // 是否正在编辑发布时间
+  private articleTagSelected: any[] = [] // 文章选中的标签
+  private articleTagList: any[] = [] // 所有标签列表
+  private classificationList: any[] = []
+  private classificationSelected: any[] = [] // 在所有分类目录中选中的目录数组
+  private offenUsedClass: any[] = []
+  private offenUsedClassSelected: any[] = [] // 常用目录选中的目录
+  private classificationFinalSelected: any[] = [] // 最后实际选择的目录
+  private publishLoading: boolean = false
+  private addingNewTag: boolean = false // 添加新标签
+  private newTagName: string = '' // 新建标签名
+
+  private editArticlePath () {
+      this.editLink = !this.editLink;
+      this.editPathButtonType = this.editPathButtonType === 'ghost' ? 'success' : 'ghost';
+      this.editPathButtonText = this.editPathButtonText === '编辑' ? '完成' : '编辑';
+  }
+  private handleEditOpenness () {
+    this.editOpenness = !this.editOpenness;
+  }
+  private handleSaveOpenness () {
+      this.Openness = this.currentOpenness;
+      this.editOpenness = false;
+  }
+  private cancelEditOpenness () {
+      this.currentOpenness = this.Openness;
+      this.editOpenness = false;
+  }
+  private handleEditPublishTime () {
+      this.editPublishTime = !this.editPublishTime;
+  }
+  private handleSavePublishTime () {
+      this.publishTimeType = 'timing';
+      this.editPublishTime = false;
+  }
+  private cancelEditPublishTime () {
+      this.publishTimeType = 'immediately';
+      this.editPublishTime = false;
+  }
+  private handleAddNewTag () {
+      this.addingNewTag = !this.addingNewTag;
+  }
+  private createNewTag () {
+      if (this.newTagName.length !== 0) {
+          this.articleTagList.push({value: this.newTagName});
+          this.addingNewTag = false;
+          setTimeout(() => {
+              this.newTagName = '';
+          }, 200);
+      } else {
+          error('请输入标签名');
+      }
+  }
+  private cancelCreateNewTag () {
+      this.newTagName = '';
+      this.addingNewTag = false;
+  }
+  private canPublish () {
+      if (this.articleTitle.length === 0) {
+          error('请输入文章标题');
+          return false;
+      } else if (tinymce.activeEditor.getContent().length === 0) {
+          error('请输入文章内容')
+      } else {
+          return true;
+      }
+  }
+  private handleSaveDraft () {
+      if (!this.canPublish()) {
+          //
+      }
+  }
+  private async handlePublish () {
+      if (this.canPublish()) {
+          const res = await this.$store.dispatch('postArt', {
+            title: this.articleTitle,
+            content: tinymce.activeEditor.getContent(),
+            state: 1,
+            publish: this.articleState
+          })
+          this.publishLoading = this.$store.state.article.posting
+      }
+  }
+  private handleSelectTag () {
+      localStorage.tagsList = JSON.stringify(this.articleTagSelected); // 本地存储文章标签列表
+  }
+  private mounted () {
+      this.articleTagList = [
+          {value: 'vue'},
+          {value: 'iview'},
+          {value: 'ES6'},
+          {value: 'webpack'},
+          {value: 'babel'},
+          {value: 'eslint'}
+      ];
+
+      tinymce.init({
+          selector: '#articleEditor',
+          branding: false,
+          elementpath: false,
+          height: 600,
+          language: 'zh_CN',
+          menubar: 'edit insert view format table tools',
+          theme: 'modern',
+          plugins: [
+              'advlist autolink lists link image charmap print preview hr anchor pagebreak imagetools',
+              'searchreplace visualblocks visualchars code fullscreen fullpage',
+              'insertdatetime media nonbreaking save table contextmenu directionality',
+              'emoticons paste textcolor colorpicker textpattern imagetools codesample'
+          ],
+          toolbar1: ' newnote print fullscreen preview | undo redo | insert | styleselect | forecolor backcolor bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image emoticons media codesample',
+          autosave_interval: '20s',
+          image_advtab: true,
+          table_default_styles: {
+              width: '100%',
+              borderCollapse: 'collapse'
+          }
+      })
+  }
+  private destroyed () {
+    tinymce.get('articleEditor').destroy();
+  }
+}
 </script>
