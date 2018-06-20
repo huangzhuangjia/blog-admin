@@ -5,21 +5,21 @@ import MOCK_API from '@/api/mock/mockAPI'
 
 let User: any  = {
   // 登陆
-  handleLogin: (
+  handleLogin (
     param: any
-  ): Promise<Ajax.AxiosResponse> => {
+  ): Promise<Ajax.AxiosResponse> {
     return fetch.post(API.User.Login, param)
                 .then((res: Ajax.AxiosResponse) => res.data)
                 .catch((e: any) => console.error(e))
   },
   // 获取用户信息
-  getUserInfo: (): Promise<Ajax.AxiosResponse>  => {
+  getUserInfo (): Promise<Ajax.AxiosResponse>  {
     return fetch.get(API.User.userInfo)
                 .then((res: Ajax.AxiosResponse) => res.data)
                 .catch((e: any) => console.error(e))
   },
   // 登出
-  handleLogout: (): Promise<Ajax.AxiosResponse>  => {
+  handleLogout (): Promise<Ajax.AxiosResponse> {
     return fetch.get(API.User.userLogout)
                 .then((res: Ajax.AxiosResponse) => res.data)
                 .catch((e: any) => console.error(e))
@@ -30,19 +30,19 @@ let User: any  = {
 if (env.mockEnv) {
   User = {
     // 登陆
-    handleLogin: (
+    handleLogin (
       param: any
-    ): Promise<Ajax.AxiosResponse> => {
+    ): Promise<Ajax.AxiosResponse> {
       return fetch.post(MOCK_API.User.login, param)
     },
      // 获取用户信息
-    getUserInfo: (): Promise<Ajax.AxiosResponse>  => {
+    getUserInfo (): Promise<Ajax.AxiosResponse>  {
       return fetch.get(MOCK_API.User.userInfo)
                   .then((res: Ajax.AxiosResponse) => res.data)
                   .catch((e: any) => console.error(e))
     },
      // 登出
-    handleLogout: (): Promise<Ajax.AxiosResponse>  => {
+    handleLogout (): Promise<Ajax.AxiosResponse> {
       return fetch.get(MOCK_API.User.userLogout)
                   .then((res: Ajax.AxiosResponse) => res.data)
                   .catch((e: any) => console.error(e))

@@ -6,5 +6,8 @@ export default {
     Login: '/login',
     userInfo: '/getUserInfo',
     userLogout: '/logout'
+  },
+  Article: {
+    postArt: '/article'
   }
 }

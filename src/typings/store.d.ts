@@ -1,5 +1,18 @@
 
 declare namespace StoreState {
+  export type State = 0 | 1 | 2 | 3 | string
+  // 公用
+  interface Common {
+    /** 唯一标识 */
+    readonly _id?: string,
+
+    /** 发布日期 */
+    readonly create_at?: Date,
+
+    /** 修改日期 */
+    readonly update_at?: Date,
+  }
+
    // 用户数据
    export interface User {
     /** 唯一标识 */
@@ -22,7 +35,7 @@ declare namespace StoreState {
     /** 密码 */
     password: string
   }
-  
+
   // 路由meta
   interface Meta {
     icon?: string,
@@ -50,5 +63,23 @@ declare namespace StoreState {
     icon: string,
     meta: Meta,
     children: StoreState.MenuList[]
+  }
+  // 文章
+  export interface Article extends Common {
+
+    /** 标题 */
+    title: string,
+
+    /** 内容 */
+    content?: string,
+
+    /** 状态 */
+    state: State,
+
+    /** 公开状态 */
+    publish: State,
+
+    /** 其他 */
+    [propName: string]: any
   }
 }
